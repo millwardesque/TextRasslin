@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { Stack } from '../../UI/Stack';
 import { WrestlerInMatch } from '../types';
+import { PlayerActions } from './PlayerActions';
 import { WrestlerStatus } from './WrestlerStatus';
 
 export const InMatchScreen: React.FC = () => {
@@ -22,9 +23,12 @@ export const InMatchScreen: React.FC = () => {
   });
 
   return (
-    <Stack gap={8}>
-      <WrestlerStatus wrestler={wrestler1} />
-      <WrestlerStatus wrestler={wrestler2} />
+    <Stack gap={64}>
+      <Stack gap={8}>
+        <WrestlerStatus wrestler={wrestler1} />
+        <WrestlerStatus wrestler={wrestler2} />
+      </Stack>
+      <PlayerActions />
     </Stack>
   );
 };
