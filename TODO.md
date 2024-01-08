@@ -5,8 +5,7 @@
 
 # Game
 
-- Wrestlers (names + health)
-- Blood status
+- Move around the ring
 - Perform move
 - AI performs move
 
