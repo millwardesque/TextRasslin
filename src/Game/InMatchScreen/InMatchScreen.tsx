@@ -12,6 +12,12 @@ export const InMatchScreen: React.FC = () => {
     },
     health: 100,
     isBleeding: false,
+    position: {
+      x: 'east',
+      y: 'north',
+      z: 'mat',
+    },
+    posture: 'standing',
   });
 
   const [wrestler2] = useState<WrestlerInMatch>({
@@ -20,6 +26,12 @@ export const InMatchScreen: React.FC = () => {
     },
     health: 100,
     isBleeding: false,
+    position: {
+      x: 'middle',
+      y: 'middle',
+      z: 'mat',
+    },
+    posture: 'standing',
   });
 
   return (

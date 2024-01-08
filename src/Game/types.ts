@@ -7,7 +7,7 @@ export type RingPositionZ =
   | 'apron'
   | 'mat'
   | 'corner'
-  | 'middle-turnbuckle'
+  | 'second-turnbuckle'
   | 'top-turnbuckle';
 
 export type RingPosition = {

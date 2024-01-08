@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { Stack } from '../../UI/Stack';
 import { WrestlerInMatch } from '../types';
+import { describeWrestler } from './utils';
 
 type WrestlerStatusProps = {
   wrestler: WrestlerInMatch;
@@ -18,6 +19,7 @@ export const WrestlerStatus: React.FC<WrestlerStatusProps> = ({ wrestler }) => {
       <Stack direction="horizontal" gap={8}>
         <span>{wrestler.wrestler.name}</span>
         <span>{wrestler.health} / 100</span>
+        <span>{describeWrestler(wrestler)}</span>
       </Stack>
     </WrestlerStatusWrapper>
   );
