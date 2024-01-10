@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 
 import { Stack } from '../../UI/Stack';
-import { WrestlerInMatch } from '../types';
+import {
+  RingPositionX,
+  RingPositionY,
+  RingPositionZ,
+  WrestlerInMatch,
+} from '../types';
 import { PlayerActions } from './PlayerActions';
 import { WrestlerStatus } from './WrestlerStatus';
 
@@ -13,9 +18,9 @@ export const InMatchScreen: React.FC = () => {
     health: 100,
     isBleeding: false,
     position: {
-      x: 'east',
-      y: 'north',
-      z: 'mat',
+      x: RingPositionX.east,
+      y: RingPositionY.north,
+      z: RingPositionZ.mat,
     },
     posture: 'standing',
   });
@@ -27,9 +32,9 @@ export const InMatchScreen: React.FC = () => {
     health: 100,
     isBleeding: false,
     position: {
-      x: 'middle',
-      y: 'middle',
-      z: 'mat',
+      x: RingPositionX.middle,
+      y: RingPositionY.middle,
+      z: RingPositionZ.mat,
     },
     posture: 'standing',
   });
