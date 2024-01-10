@@ -4,10 +4,10 @@
 
 # Game
 
-- getReverseDirection util and tests
+- Map action to button
+- Handle same-cell (zero-direction) case for back-up
 - Move around the ring
 - Unit tests for utils
-- Distance calculation
 - Perform move
 - AI performs move
 
