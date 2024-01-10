@@ -1,14 +1,25 @@
 export type GameState = 'in-match';
 
-export type RingPositionX = 'east' | 'middle' | 'west';
-export type RingPositionY = 'north' | 'middle' | 'south';
-export type RingPositionZ =
-  | 'floor'
-  | 'apron'
-  | 'mat'
-  | 'corner'
-  | 'second-turnbuckle'
-  | 'top-turnbuckle';
+export enum RingPositionX {
+  west = -1,
+  middle = 0,
+  east = 1,
+}
+
+export enum RingPositionY {
+  south = -1,
+  middle = 0,
+  north = 1,
+}
+
+export enum RingPositionZ {
+  floor = -2,
+  apron = -1,
+  mat = 0,
+  corner = 1,
+  secondTurnbuckle = 2,
+  topTurnbuckle = 3,
+}
 
 export type RingPosition = {
   x: RingPositionX;
@@ -18,6 +29,19 @@ export type RingPosition = {
 
 export type Wrestler = {
   name: string;
+};
+
+export type WrestlerAction = {
+  name: string;
+  onPerform: (
+    performer: WrestlerInMatch,
+    receiver?: WrestlerInMatch
+  ) => WrestlerActionResult;
+};
+
+export type WrestlerActionResult = {
+  performer: WrestlerInMatch;
+  receiver?: WrestlerInMatch;
 };
 
 export type WrestlerInMatch = {

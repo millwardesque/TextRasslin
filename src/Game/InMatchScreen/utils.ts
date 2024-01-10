@@ -1,10 +1,15 @@
 import {
+  RingPosition,
   RingPositionX,
   RingPositionY,
   RingPositionZ,
   WrestlerInMatch,
   WrestlerPosture,
 } from '../types';
+
+export function clamp(value: number, min: number, max: number): number {
+  return Math.min(Math.max(value, min), max);
+}
 
 export function describeWrestler(wrestler: WrestlerInMatch): string {
   const { position, posture } = wrestler;
@@ -24,30 +29,30 @@ function describeWrestlerPositionXY(
   x: RingPositionX,
   y: RingPositionY
 ): string {
-  if (x === 'middle' && y === 'middle') {
+  if (x === RingPositionX.middle && y === RingPositionY.middle) {
     return 'middle of the';
-  } else if (x === 'middle') {
-    return `${y} side`;
-  } else if (y === 'middle') {
-    return `${x} side`;
+  } else if (x === RingPositionX.middle) {
+    return `${RingPositionY[y]} side`;
+  } else if (y === RingPositionY.middle) {
+    return `${RingPositionX[x]} side`;
   } else {
-    return `${y}-${x} corner of the`;
+    return `${RingPositionY[y]}-${RingPositionX[x]} corner of the`;
   }
 }
 
 function describeWrestlerPositionZ(position: RingPositionZ): string {
   switch (position) {
-    case 'apron':
+    case RingPositionZ.apron:
       return '#POSTURE# on the #POSITION# apron';
-    case 'corner':
+    case RingPositionZ.corner:
       return '#POSTURE# in the #POSITION# corner';
-    case 'floor':
+    case RingPositionZ.floor:
       return '#POSTURE# on the #POSITION# floor';
-    case 'mat':
+    case RingPositionZ.mat:
       return '#POSTURE# in the #POSITION# ring';
-    case 'second-turnbuckle':
+    case RingPositionZ.secondTurnbuckle:
       return '#POSTURE# on the #POSITION# second turnbuckle';
-    case 'top-turnbuckle':
+    case RingPositionZ.topTurnbuckle:
       return '#POSTURE# on the top #POSITION# turnbuckle';
     default:
       throw new Error(`Unhandled z-position ${position}`);
@@ -65,4 +70,19 @@ function describeWrestlerPosture(posture: WrestlerPosture): string {
     default:
       throw new Error(`Unhandled posture ${posture}`);
   }
+}
+
+export function getDirection(
+  from: RingPosition,
+  to: RingPosition
+): RingPosition {
+  const xDirection: RingPositionX = clamp(to.x - from.x, -1, 1);
+  const yDirection: RingPositionY = clamp(to.y - from.y, -1, 1);
+  const zDirection: RingPositionZ = clamp(to.z - from.z, -1, 1);
+
+  return {
+    x: xDirection,
+    y: yDirection,
+    z: zDirection,
+  };
 }
