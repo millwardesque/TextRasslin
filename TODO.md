@@ -1,14 +1,13 @@
 # Environment
 
 - CI/CD
-- Test setup
 
 # Game
 
 - getReverseDirection util and tests
+- Move around the ring
 - Unit tests for utils
 - Distance calculation
-- Move around the ring
 - Perform move
 - AI performs move
 

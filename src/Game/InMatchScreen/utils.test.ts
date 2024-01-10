@@ -4,7 +4,7 @@ import {
   RingPositionY,
   RingPositionZ,
 } from '../types';
-import { getDirection } from './utils';
+import { getDirection, movePositionByDirection } from './utils';
 
 const DEFAULT_POSITION: RingPosition = {
   x: RingPositionX.middle,
@@ -132,4 +132,83 @@ describe('getDirection', () => {
       });
     }
   );
+});
+
+describe('movePositionByDirection', () => {
+  test.each([
+    [
+      {
+        x: -100,
+        y: 0,
+        z: 0,
+      },
+    ],
+    [
+      {
+        x: 100,
+        y: 0,
+        z: 0,
+      },
+    ],
+    [
+      {
+        x: 0,
+        y: -100,
+        z: 0,
+      },
+    ],
+    [
+      {
+        x: 0,
+        y: 100,
+        z: 0,
+      },
+    ],
+    [
+      {
+        x: 0,
+        y: 0,
+        z: -100,
+      },
+    ],
+    [
+      {
+        x: 0,
+        y: 0,
+        z: 100,
+      },
+    ],
+  ])(
+    'throws if the computed position is out of bounds (distance = %j)',
+    (direction) => {
+      expect(() =>
+        movePositionByDirection(DEFAULT_POSITION, direction)
+      ).toThrow();
+    }
+  );
+
+  it('returns the same position values if direction is zero', () => {
+    expect(movePositionByDirection(DEFAULT_POSITION, DEFAULT_POSITION)).toEqual(
+      DEFAULT_POSITION
+    );
+  });
+
+  it('adjust the position along each direction axis', () => {
+    const position = {
+      x: RingPositionX.middle,
+      y: RingPositionY.middle,
+      z: RingPositionZ.mat,
+    };
+    const direction: RingPosition = {
+      x: -1,
+      y: 1,
+      z: 2,
+    };
+
+    expect(movePositionByDirection(position, direction)).toEqual({
+      x: RingPositionX.west,
+      y: RingPositionY.north,
+      z: RingPositionZ.secondTurnbuckle,
+    });
+  });
 });

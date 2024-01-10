@@ -86,3 +86,26 @@ export function getDirection(
     z: zDirection,
   };
 }
+
+export function movePositionByDirection(
+  position: RingPosition,
+  direction: RingPosition
+): RingPosition {
+  const newPosition: RingPosition = {
+    x: position.x + direction.x,
+    y: position.y + direction.y,
+    z: position.z + direction.z,
+  };
+
+  if (
+    RingPositionX[newPosition.x] === undefined ||
+    RingPositionY[newPosition.y] === undefined ||
+    RingPositionZ[newPosition.z] === undefined
+  ) {
+    throw new Error(
+      `Unable to move position ${position} by direction ${direction}: Computed position ${newPosition} isn't valid`
+    );
+  }
+
+  return newPosition;
+}
