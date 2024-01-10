@@ -5,8 +5,6 @@
 
 # Game
 
-- Normalize direction calculation
-- getDirection util and tests
 - getReverseDirection util and tests
 - Unit tests for utils
 - Distance calculation
