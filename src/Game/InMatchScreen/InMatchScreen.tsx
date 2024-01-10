@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Stack } from '../../UI/Stack';
 import {
@@ -7,9 +7,9 @@ import {
   RingPositionZ,
   WrestlerInMatch,
 } from '../types';
-import { InMatchProvider, useInMatchContext } from './InMatchContext';
+import { InMatchProvider } from './InMatchContext';
+import { InMatchHeader } from './InMatchHeader';
 import { PlayerActions } from './PlayerActions';
-import { WrestlerStatus } from './WrestlerStatus';
 
 const WRESTLER1: WrestlerInMatch = {
   wrestler: {
@@ -47,17 +47,5 @@ export const InMatchScreen: React.FC = () => {
         <PlayerActions />
       </Stack>
     </InMatchProvider>
-  );
-};
-
-export const InMatchHeader: React.FC = () => {
-  const wrestler1 = useInMatchContext((state) => state.wrestler1);
-  const wrestler2 = useInMatchContext((state) => state.wrestler2);
-
-  return (
-    <Stack gap={8}>
-      <WrestlerStatus wrestler={wrestler1} />
-      <WrestlerStatus wrestler={wrestler2} />
-    </Stack>
   );
 };
