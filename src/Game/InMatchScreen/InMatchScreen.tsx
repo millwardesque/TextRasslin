@@ -10,6 +10,7 @@ import {
 import { InMatchProvider } from './InMatchContext';
 import { InMatchHeader } from './InMatchHeader';
 import { PlayerActions } from './PlayerActions';
+import { RingDisplay } from './RingDisplay';
 
 const WRESTLER1: WrestlerInMatch = {
   wrestler: {
@@ -44,6 +45,7 @@ export const InMatchScreen: React.FC = () => {
     <InMatchProvider wrestler1={WRESTLER1} wrestler2={WRESTLER2}>
       <Stack gap={64}>
         <InMatchHeader />
+        <RingDisplay />
         <PlayerActions />
       </Stack>
     </InMatchProvider>
