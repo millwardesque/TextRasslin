@@ -1,5 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useShallow } from 'zustand/react/shallow';
+
+import {
+  RingPosition,
+  RingPositionX,
+  RingPositionY,
+  RingPositionZ,
+} from '../types';
+import { useInMatchContext } from './InMatchContext';
+
+const OFFSET_DISTANCE = 2; // Distance multiplied by the offset, in px;
+
+const GridGroup: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return <div style={{ display: 'contents' }}>{children}</div>;
+};
 
 const RingGrid = styled.div`
   display: grid;
@@ -30,9 +45,80 @@ const RingGridMat = styled(RingGridCell)<{ $column: string; $row: string }>`
   border: 1px dashed #00f;
 `;
 
+const WrestlerDisplay = styled.div<{ $color: string; $offset: number }>`
+  position: relative;
+  top: ${({ $offset }) => $offset * OFFSET_DISTANCE}px;
+  left: ${({ $offset }) => $offset * OFFSET_DISTANCE}px;
+  width: 8px;
+  height: 8px;
+  background-color: ${({ $color }) => $color};
+`;
+
 export const RingDisplay: React.FC = () => {
+  const { wrestler1, wrestler2 } = useInMatchContext(
+    useShallow(({ wrestler1, wrestler2 }) => ({
+      wrestler1,
+      wrestler2,
+    }))
+  );
+
+  const wrestler1Cell = ringPositionToGridCell(wrestler1.position);
+  const wrestler2Cell = ringPositionToGridCell(wrestler2.position);
+
   return (
     <RingGrid>
+      <RingGridFloorCells />
+      <RingGridApronCells />
+      <RingGridMatCells />
+
+      <RingGridCell
+        $column={wrestler1Cell.column}
+        $row={wrestler1Cell.row}
+        style={{ alignItems: 'center', justifyContent: 'center' }}
+      >
+        <WrestlerDisplay $color="#f00" $offset={1} />
+      </RingGridCell>
+      <RingGridCell
+        $column={wrestler2Cell.column}
+        $row={wrestler2Cell.row}
+        style={{ alignItems: 'center', justifyContent: 'center' }}
+      >
+        <WrestlerDisplay $color="#0f0" $offset={-1} />
+      </RingGridCell>
+      <RingGridCell $column={wrestler2Cell.column} $row={wrestler2Cell.row} />
+    </RingGrid>
+  );
+};
+
+export const RingGridApronCells: React.FC = () => {
+  return (
+    <GridGroup>
+      <RingGridApron $column="west-apron" $row="north-apron" />
+      <RingGridApron $column="west-apron" $row="north-mat" />
+      <RingGridApron $column="west-apron" $row="middle-mat" />
+      <RingGridApron $column="west-apron" $row="south-mat" />
+      <RingGridApron $column="west-apron" $row="south-apron" />
+
+      <RingGridApron $column="east-apron" $row="north-apron" />
+      <RingGridApron $column="east-apron" $row="north-mat" />
+      <RingGridApron $column="east-apron" $row="middle-mat" />
+      <RingGridApron $column="east-apron" $row="south-mat" />
+      <RingGridApron $column="east-apron" $row="south-apron" />
+
+      <RingGridApron $column="west-mat" $row="north-apron" />
+      <RingGridApron $column="middle-mat" $row="north-apron" />
+      <RingGridApron $column="east-mat" $row="north-apron" />
+
+      <RingGridApron $column="west-mat" $row="south-apron" />
+      <RingGridApron $column="middle-mat" $row="south-apron" />
+      <RingGridApron $column="east-mat" $row="south-apron" />
+    </GridGroup>
+  );
+};
+
+export const RingGridFloorCells: React.FC = () => {
+  return (
+    <GridGroup>
       <RingGridFloor $column="west-floor" $row="north-floor" />
       <RingGridFloor $column="west-floor" $row="north-apron" />
       <RingGridFloor $column="west-floor" $row="north-mat" />
@@ -60,38 +146,42 @@ export const RingDisplay: React.FC = () => {
       <RingGridFloor $column="middle-mat" $row="south-floor" />
       <RingGridFloor $column="east-mat" $row="south-floor" />
       <RingGridFloor $column="east-apron" $row="south-floor" />
-
-      <RingGridApron $column="west-apron" $row="north-apron" />
-      <RingGridApron $column="west-apron" $row="north-mat" />
-      <RingGridApron $column="west-apron" $row="middle-mat" />
-      <RingGridApron $column="west-apron" $row="south-mat" />
-      <RingGridApron $column="west-apron" $row="south-apron" />
-
-      <RingGridApron $column="east-apron" $row="north-apron" />
-      <RingGridApron $column="east-apron" $row="north-mat" />
-      <RingGridApron $column="east-apron" $row="middle-mat" />
-      <RingGridApron $column="east-apron" $row="south-mat" />
-      <RingGridApron $column="east-apron" $row="south-apron" />
-
-      <RingGridApron $column="west-mat" $row="north-apron" />
-      <RingGridApron $column="middle-mat" $row="north-apron" />
-      <RingGridApron $column="east-mat" $row="north-apron" />
-
-      <RingGridApron $column="west-mat" $row="south-apron" />
-      <RingGridApron $column="middle-mat" $row="south-apron" />
-      <RingGridApron $column="east-mat" $row="south-apron" />
-
-      <RingGridMat $column="west-mat" $row="north-mat" />
-      <RingGridMat $column="west-mat" $row="middle-mat" />
-      <RingGridMat $column="west-mat" $row="south-mat" />
-
-      <RingGridMat $column="middle-mat" $row="north-mat" />
-      <RingGridMat $column="middle-mat" $row="middle-mat" />
-      <RingGridMat $column="middle-mat" $row="south-mat" />
-
-      <RingGridMat $column="east-mat" $row="north-mat" />
-      <RingGridMat $column="east-mat" $row="middle-mat" />
-      <RingGridMat $column="east-mat" $row="south-mat" />
-    </RingGrid>
+    </GridGroup>
   );
 };
+
+export const RingGridMatCells: React.FC = () => {
+  const matPositionName = RingPositionZ[RingPositionZ.mat];
+
+  const xPositions = Object.values(RingPositionX)
+    .filter((position) => isNaN(Number(position)))
+    .map((xPosition) => `${xPosition}-${matPositionName}`);
+
+  const yPositions = Object.values(RingPositionY)
+    .filter((position) => isNaN(Number(position)))
+    .map((yPosition) => `${yPosition}-${matPositionName}`);
+
+  return (
+    <GridGroup>
+      {xPositions.flatMap((xPosition) =>
+        yPositions.map((yPosition) => (
+          <RingGridMat $column={xPosition} $row={yPosition} />
+        ))
+      )}
+    </GridGroup>
+  );
+};
+
+function ringPositionToGridCell(position: RingPosition): {
+  column: string;
+  row: string;
+} {
+  const xPositionName = RingPositionX[position.x];
+  const yPositionName = RingPositionY[position.y];
+  const zPositionName = RingPositionZ[position.z];
+
+  return {
+    column: `${xPositionName}-${zPositionName}`,
+    row: `${yPositionName}-${zPositionName}`,
+  };
+}
