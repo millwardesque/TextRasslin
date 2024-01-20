@@ -4,12 +4,10 @@
 
 # Game
 
-- Map actions to button
-- Handle same-cell (zero-direction) case for back-up
-- Move around the ring
-- Unit tests for utils
-- Perform move
-- AI performs move
+- Movement actions around the ring
 - Fetch move list
+- Unit tests for utils
+- AI performs move
+- Commentary
 
 # Engine
