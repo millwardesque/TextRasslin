@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { backUpAction } from '../actions';
+import { moveWestAction } from '../actions';
 import { WrestlerAction, WrestlerInMatch } from '../types';
 
 export function useWrestlerActions(
@@ -10,7 +10,7 @@ export function useWrestlerActions(
   return useMemo(() => {
     const actions: Array<WrestlerAction> = [];
 
-    actions.push(backUpAction);
+    actions.push(moveWestAction);
 
     return actions;
   }, []);

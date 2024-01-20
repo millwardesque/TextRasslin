@@ -32,6 +32,10 @@ export type Wrestler = {
 };
 
 export type WrestlerAction = {
+  canPerform: (
+    performer: WrestlerInMatch,
+    receiver?: WrestlerInMatch
+  ) => boolean;
   name: string;
   onPerform: (
     performer: WrestlerInMatch,
