@@ -1,7 +1,11 @@
 import { cloneDeep } from 'lodash-es';
 
-import { getDirection, movePositionByDirection } from './InMatchScreen/utils';
-import { WrestlerAction, WrestlerActionResult, WrestlerInMatch } from './types';
+import { getDirection, movePositionByDirection } from '../InMatchScreen/utils';
+import {
+  WrestlerAction,
+  WrestlerActionResult,
+  WrestlerInMatch,
+} from '../types';
 
 export const backUpAction: WrestlerAction = {
   name: 'Back up',
